@@ -1,0 +1,9 @@
+.alert-outline-info {
+  background-color: transparent;
+  border: 1px #3498db solid;
+  color: #3498db;
+}
+.alert-sm {
+  padding: 0.7rem 0.8rem;
+  font-size: 0.9em;
+}

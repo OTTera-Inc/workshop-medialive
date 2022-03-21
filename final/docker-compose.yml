@@ -1,0 +1,33 @@
+version: "3.8"
+
+volumes:
+  logs:
+    driver: local
+
+services:
+  backend:
+    image: php:8.1-alpine
+    working_dir: /var/www
+    command: php -S 0.0.0.0:8080 -t public
+    environment:
+      docker: "true"
+    ports:
+      - "8080:8080"
+    env_file:
+        - "backend/.env"
+    volumes:
+      - ./backend:/var/www
+      - ./backend/logs:/var/www/logs
+
+  frontend:
+    image: node:17-alpine
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    env_file:
+        - "frontend/.env"
+    depends_on:
+      - backend
+    command: yarn start
