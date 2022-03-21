@@ -1,0 +1,14 @@
+{
+  "name": "ottera-workshop-medialive",
+  "version": "1.0.0",
+  "description": "Base de uma aplicação para usar no workshop de AWS MediaLive",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vinícius Campitelli <1877191+vcampitelli@users.noreply.github.com>",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1096.0"
+  }
+}

@@ -1,0 +1,16 @@
+{
+    "name": "ottera/workshop-medialive",
+    "description": "Base de uma aplicação para usar no workshop de AWS MediaLive",
+    "type": "project",
+    "require": {
+        "aws/aws-sdk-php": "^3.215"
+    },
+    "license": "mit",
+    "authors": [
+        {
+            "name": "Vinícius Campitelli",
+            "email": "1877191+vcampitelli@users.noreply.github.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
