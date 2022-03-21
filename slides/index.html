@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>Workshop AWS MediaLive | OTTera</title>
+
+        <link rel="stylesheet" href="reveal.js/dist/reset.css">
+        <link rel="stylesheet" href="reveal.js/dist/reveal.css">
+        <link rel="stylesheet" href="reveal.js/dist/theme/white.css">
+        <link rel="stylesheet" href="reveal.js/plugin/highlight/monokai.css">
+        <link rel="stylesheet" href="css/app.css">
+
+        <link rel="icon" href="favicon.ico" sizes="any">
+        <link rel="apple-touch-icon" href="img/favicon192.png">
+        <link rel="manifest" href="manifest.json">
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                    <h1>
+                        <span class="smaller mb-0 red">Workshop</span>
+                        AWS MediaLive
+                    </h1>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>OTTera</h2>
+                        <p>
+                            Serviços OTT <em>(over-the-top)</em> para distribuição e monetização de conteúdos em
+                            diversas plataformas
+                        </p>
+                        <p>Global:</p>
+                        <div class="d-flex justify-between third-columns small">
+                            <div>
+                                <h6>200+</h6> canais lineares
+                            </div>
+                            <div class="px-1">
+                                <h6>75+</h6> aplicativos OTT
+                            </div>
+                            <div>
+                                <h6>105.000.000+</h6> usuários finais
+                            </div>
+                        </div>
+                        <p>LATAM:</p>
+                        <div class="d-flex justify-between third-columns small">
+                            <div>
+                                <h6>1.500.000.000+</h6> de impressões por mês
+                            </div>
+                            <div class="px-1">
+                                <h6>40+</h6> canais lineares
+                            </div>
+                            <div>
+                                <h6>#1</h6> em serviços de OTT
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <img src="img/canais.png" alt="Canais no Brasil">
+                    </section>
+                    <section id="about">
+                        <h3>
+                            <span class="subtitle">OTTera</span>
+                            Equipe presente
+                        </h3>
+                        <div class="d-flex half-columns">
+                            <div>
+                                <img src="img/adam.jpg" alt="Adam Zhu">
+                                <div>
+                                    <h6>Adam Zhu</h6>
+                                    <a href="mailto:adam@ottera.tv">adam@ottera.tv</a>
+                                </div>
+                            </div>
+                            <div>
+                                <img src="img/craig.jpg" alt="Craig McEldowney">
+                                <div>
+                                    <h6>Craig McEldowney</h6>
+                                    <a href="mailto:craig@ottera.tv">craig@ottera.tv</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex half-columns">
+                            <div>
+                                <img src="img/joe.jpg" alt="Joe Chellman">
+                                <div>
+                                    <h6>Joe Chellman</h6>
+                                    <a href="mailto:joe@ottera.tv">joe@ottera.tv</a>
+                                </div>
+                            </div>
+                            <div>
+                                <img src="img/srifkin.jpg" alt="Steve Rifkin">
+                                <div>
+                                    <h6>Steve Rifkin</h6>
+                                    <a href="mailto:srifkin@ottera.tv">srifkin@ottera.tv</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex half-columns">
+                            <div>
+                                <img src="img/vinicius.jpg" alt="Vinícius Campitelli">
+                                <div>
+                                    <h6>Vinícius Campitelli</h6>
+                                    <a href="mailto:vinicius@ottera.tv">vinicius@ottera.tv</a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+
+                <section> <!-- Objetivo -->
+                    <h2>Objetivo</h2>
+                    <p>
+                        Utilizar os serviços de streaming da AWS para criar e gerenciar um canal ao vivo - e
+                        eventualmente disponibilizá-lo em diversos dispositivos, como TVs, computadores, smartphones...
+                    </p>
+                </section> <!-- Objetivo -->
+
+                <section> <!-- Soluções AWS -->
+                    <section data-auto-animate>
+                        <h2>Soluções AWS</h2>
+                        <p>
+                            Em 2015, a Amazon compra uma empresa chamada <em>Elemental Technologies</em> por cerca de
+                            US$500 milhões para oferecer soluções de vídeo
+                        </p>
+                        <div class="smaller">
+                            Fonte:
+                            <a href="https://techcrunch.com/2015/09/03/amazon-acquires-elemental-technologies-for-a-reported-500-million-in-cash/"
+                               target="_blank">
+                                techchrunch.com
+                            </a>
+                        </div>
+                    </section>
+                    <section data-auto-animate>
+                        <h2>Soluções AWS</h2>
+                        <p>Os serviços são:</p>
+                        <div class="d-flex half-columns">
+                            <div class="fragment semi-fade-out" data-fragment-index="0">
+                                <h4 class="mb-0">
+                                    <a href="https://docs.aws.amazon.com/mediaconnect/latest/ug/what-is.html"
+                                       target="_blank">
+                                        MediaConnect
+                                    </a>
+                                </h4>
+                                <div class="small">Fluxos de ingestão e distribuição</div>
+                            </div>
+                            <div class="fragment semi-fade-out" data-fragment-index="0">
+                                <h4 class="mb-0">
+                                    <a href="https://docs.aws.amazon.com/mediaconvert/latest/ug/what-is.html"
+                                       target="_blank">
+                                        MediaConvert
+                                    </a>
+                                </h4>
+                                <div class="small">Conversão de vídeos offline</div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="d-flex half-columns">
+                            <div>
+                                <h4 class="mb-0">
+                                    <a href="https://docs.aws.amazon.com/medialive/latest/ug/what-is.html"
+                                       target="_blank">
+                                        MediaLive
+                                    </a> <span class="small fragment" data-fragment-index="0">*</span>
+                                </h4>
+                                <div class="small">Processamento de vídeos ao vivo</div>
+                            </div>
+                            <div>
+                                <h4 class="mb-0">
+                                    <a href="https://docs.aws.amazon.com/mediapackage/latest/ug/what-is.html"
+                                       target="_blank">
+                                        MediaPackage
+                                    </a>
+                                </h4>
+                                <div class="small">Conversão de vídeos em tempo real</div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="d-flex half-columns">
+                            <div class="fragment semi-fade-out" data-fragment-index="0">
+                                <h4 class="mb-0">
+                                    <a href="https://docs.aws.amazon.com/mediastore/latest/ug/what-is.html"
+                                       target="_blank">
+                                        MediaStore
+                                    </a> <span class="small fragment" data-fragment-index="0">*</span>
+                                </h4>
+                                <div class="small">Armazenamento de vídeos ao vivo</div>
+                            </div>
+                            <div>
+                                <h4 class="mb-0">
+                                    <a href="https://docs.aws.amazon.com/mediatailor/latest/ug/what-is.html"
+                                       target="_blank">
+                                        MediaTailor
+                                    </a> <span class="small fragment" data-fragment-index="0">*</span>
+                                </h4>
+                                <div class="small">Inserção de anúncios <em class="small">(monetização)</em></div>
+                            </div>
+                        </div>
+                    </section>
+                    <section data-auto-animate>
+                        <h2>Soluções AWS</h2>
+                        <p>Exemplo de arquitetura:</p>
+                        <img src="img/aws-suite.png" alt="Arquitetura da suíte AWS Elemental">
+                        <div class="smaller">
+                            Fonte:
+                            <a href="https://docs.aws.amazon.com/solutions/latest/live-streaming/welcome.html" target="_blank">
+                                docs.aws.amazon.com/solutions/latest/live-streaming
+                            </a>
+                        </div>
+                    </section>
+                </section> <!-- Soluções AWS -->
+
+                <section> <!-- MediaLive -->
+                    <section>
+                        <h2>MediaLive</h2>
+                    </section>
+                    <section>
+                        <h3>
+                            <span class="subtitle">MediaLive</span>
+                            Glossário
+                        </h3>
+                        <a href="https://docs.aws.amazon.com/medialive/latest/ug/what-is-terminology.html"
+                           target="_blank">
+                            MediaLive Terminology <em class="small">(docs.aws.amazon.com)</em>
+                        </a>
+                    </section>
+                    <section>
+                        <h3>
+                            <span class="subtitle">MediaLive</span>
+                            Fluxograma
+                        </h3>
+                        <img src="img/medialive.png" alt="Diagrama de fluxo">
+                        <div class="smaller">
+                            Fonte:
+                            <a href="https://aws.amazon.com/medialive/"
+                               target="_blank">
+                                aws.amazon.com/medialive
+                            </a>
+                        </div>
+                    </section>
+                    <section>
+                        <h3>
+                            <span class="subtitle">MediaLive</span>
+                            Entradas
+                        </h3>
+                        <p>Formatos aceitos para os vídeos de entrada:</p>
+                        <div class="d-flex half-columns">
+                            <div>
+                                <p>Streaming:</p>
+                                <ul>
+                                    <li class="fragment semi-fade-out" data-fragment-index="0">RTP</li>
+                                    <li>
+                                        <span class="fragment semi-fade-out" data-fragment-index="0">RTMP Pull /</span>
+                                        RTMP Push <span class="fragment" data-fragment-index="0">*</span>
+                                    </li>
+                                    <li class="fragment semi-fade-out" data-fragment-index="0">HLS</li>
+                                </ul>
+                                <p class="fragment semi-fade-out" data-fragment-index="0">Estáticos:</p>
+                                <ul>
+                                    <li class="fragment semi-fade-out" data-fragment-index="0">Arquivos MP4</li>
+                                    <li class="fragment semi-fade-out" data-fragment-index="0">Arquivos TS</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <p class="fragment semi-fade-out" data-fragment-index="0">Serviços:</p>
+                                <ul>
+                                    <li class="fragment semi-fade-out" data-fragment-index="0">AWS MediaConnect</li>
+                                    <li class="fragment semi-fade-out" data-fragment-index="0">AWS Cloud Digital Interface</li>
+                                    <li class="fragment semi-fade-out" data-fragment-index="0">AWS Elemental Link</li>
+                                </ul>
+                                <br><br><br><br>
+                                <div class="smaller">
+                                    Fonte:
+                                    <a href="https://docs.aws.amazon.com/medialive/latest/ug/inputs-supported-formats.html"
+                                       target="_blank">
+                                        docs.aws.amazon.com/medialive
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <h3>
+                            <span class="subtitle">MediaLive</span>
+                            Saídas
+                        </h3>
+                        <p>Formatos aceitos para as saídas:</p>
+                        <ul>
+                            <li class="fragment semi-fade-out" data-fragment-index="0">
+                                Arquivos TS para S3 ou via UDP
+                            </li>
+                            <li class="fragment semi-fade-out" data-fragment-index="0">
+                                Arquivos JPEG com frames para S3
+                            </li>
+                            <li class="fragment semi-fade-out" data-fragment-index="0">
+                                AWS MediaPackage
+                            </li>
+                            <li>
+                                AWS MediaStore
+                                <span class="fragment" data-fragment-index="0">*</span>
+                            </li>
+                            <li class="fragment semi-fade-out" data-fragment-index="0">
+                                HLS
+                            </li>
+                            <li class="fragment semi-fade-out" data-fragment-index="0">
+                                Microsoft Smooth
+                            </li>
+                            <li class="fragment semi-fade-out" data-fragment-index="0">
+                                RTMP
+                            </li>
+                        </ul>
+                        <br><br>
+                        <div class="smaller">
+                            Fonte:
+                            <a href="https://docs.aws.amazon.com/medialive/latest/ug/outputs-supported-containers.html"
+                               target="_blank">
+                                docs.aws.amazon/medialive
+                            </a>
+                        </div>
+                    </section>
+                    <section>
+                        <h3>
+                            <span class="subtitle">MediaLive</span>
+                            Documentações
+                        </h3>
+                        <ul>
+                            <li>
+                                <a href="https://docs.aws.amazon.com/medialive/latest/ug/what-is.html"
+                                   target="_blank">Manual do Usuário</a>
+                            </li>
+                            <li>
+                                <a href="https://docs.aws.amazon.com/medialive/latest/apireference/what-is.html"
+                                   target="_blank">Referência da API</a>
+                                <ul>
+                                    <li>
+                                        <a href="https://docs.aws.amazon.com/aws-sdk-php/v3/api/api-medialive-2017-10-14.html"
+                                           target="_blank">
+                                            SDK PHP
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="hhttps://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/MediaLive.html"
+                                           target="_blank">
+                                            SDK JavaScript
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/medialive.html"
+                                           target="_blank">
+                                            SDK Python
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://pkg.go.dev/github.com/aws/aws-sdk-go-v2/service/medialive"
+                                           target="_blank">
+                                            SDK Go
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+                </section> <!-- MediaLive -->
+
+                <section> <!-- MediaStore -->
+                    <section>
+                        <h2>MediaStore</h2>
+                    </section>
+                    <section>
+                        <h3>
+                            <span class="subtitle">MediaStore</span>
+                            Glossário
+                        </h3>
+                        <a href="https://docs.aws.amazon.com/mediastore/latest/ug/what-is-concepts.html"
+                           target="_blank">
+                            Concepts and terminology <em class="small">(docs.aws.amazon.com)</em>
+                        </a>
+                    </section>
+                    <section>
+                        <h3>
+                            <span class="subtitle">MediaStore</span>
+                            Fluxograma
+                        </h3>
+                        <img src="img/mediastore.png" alt="Diagrama de fluxo">
+                        <div class="smaller">
+                            Fonte:
+                            <a href="https://aws.amazon.com/mediastore/" target="_blank">
+                                aws.amazon.com/mediastore
+                            </a>
+                        </div>
+                    </section>
+                </section> <!-- MediaStore -->
+
+                <section> <!-- CloudFront -->
+                    <section>
+                        <h2>CloudFront</h2>
+                    </section>
+                    <section>
+                        <h3>
+                            <span class="subtitle">CloudFront</span>
+                            Como funciona?
+                        </h3>
+                        <img src="img/cloudfront.png" alt="CloudFront"> <br>
+                        <a href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html"
+                           target="_blank">
+                            What is Amazon CloudFront? <em class="small">(docs.aws.amazon.com)</em>
+                        </a>
+                    </section>
+                    <section>
+                        <h3>
+                            <span class="subtitle">CloudFront</span>
+                            Configurando
+                        </h3>
+                        <a href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/live-streaming.html#video-streaming-mediastore"
+                           target="_blank">
+                            Delivering live streaming video with CloudFront and AWS Media Services
+                        </a>
+                    </section>
+                </section> <!-- CloudFront -->
+
+                <section> <!-- MediaTailor -->
+                    <section data-auto-animate data-auto-animate-restart>
+                        <h2>MediaTailor</h2>
+                    </section>
+                    <section data-auto-animate>
+                        <h2>MediaTailor</h2>
+                        <p>
+                            A principal forma de monetização de um canal é através de anúncios comerciais (os famosos
+                            <em>ads</em>)
+                        </p>
+                        <p class="fragment">
+                            Quem opera o canal sinaliza a entrada de um intervalo comercial <em>(imediatamente ou
+                            agendando)</em>, igual uma TV
+                        </p>
+                        <p class="fragment">
+                            Algumas plataformas de <em>streaming</em> podem forçar a inserção de anúncios de acordo
+                            com suas políticas
+                        </p>
+                    </section>
+                    <section>
+                        <h3>
+                            <span class="subtitle">MediaTailor</span>
+                            Glossário
+                        </h3>
+                        <ul class="margin">
+                            <li>
+                                <b>SSAI <em>(Server-Side Ad Insertion)</em></b>: serviço <em>(como o MediaTailor)</em>
+                                que insere anúncios em um vídeo
+                            </li>
+                            <li>
+                                <b>Ad Decision Server</b>: servidor que retorna anúncios de acordo com parâmetros
+                                financeiros e de personalização do espectador
+                            </li>
+                        </ul>
+                        <a href="https://docs.aws.amazon.com/mediatailor/latest/ug/what-is-terms.html"
+                           target="_blank">
+                            MediaTailor concepts <em class="small">(docs.aws.amazon.com)</em>
+                        </a>
+                    </section>
+                    <section>
+                        <h3>
+                            <span class="subtitle">MediaTailor</span>
+                            Fluxo
+                        </h3>
+                        <p>
+                            Ao receber a sinalização de um anúncio, o serviço irá pedir a um servidor especializado em
+                            anúncios (chamado <em>Ad Decision Server</em>) quais devem ser inseridos de acordo com dados
+                            de quem está assistindo para personalização
+                        </p>
+                        <p class="fragment">
+                            Então, esse serviço altera o sinal de <em>streaming</em> inserindo os vídeos dos anúncios
+                            <em>(um processo chamado stitching)</em>
+                        </p>
+                    </section>
+                    <section>
+                        <h3>
+                            <span class="subtitle">MediaTailor</span>
+                            Fluxograma
+                        </h3>
+                        <img src="img/mediatailor.png" alt="Fluxograma MediaTailor">
+                        <div class="smaller">
+                            Fonte:
+                            <a href="https://docs.aws.amazon.com/mediatailor/latest/ug/what-is-flow.html"
+                               target="_blank">
+                                docs.aws.amazon.com/mediatailor
+                            </a>
+                        </div>
+                    </section>
+                </section> <!-- MediaTailor -->
+
+                <section> <!-- Hands-on -->
+                    <section>
+                        <h2>Hands-on</h2>
+                        <p>
+                            Vamos criar uma aplicação que será o painel de controle do nosso canal com as seguintes
+                            funcionalidades:
+                        </p>
+                        <ul>
+                            <li class="fragment">Chaveamento entre entradas;</li>
+                            <li class="fragment">Sinalização de Anúncios;</li>
+                            <li class="fragment">Overlays <em>(estático com imagem e dinâmico com vídeo)</em>.</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>
+                            <span class="subtitle">Hands-on</span>
+                            Inicializando Aplicação
+                        </h3>
+                        <ol>
+                            <li>
+                                Clone o repositório
+                                <pre><code class="sh">git clone github.com/ottera-inc/workshop-medialive.git</code></pre>
+                            </li>
+                            <li>
+                                Edite o arquivo <code>backend/.env</code> e informe a <em>Access Key</em> e a
+                                <em>Secret Key</em> que foram disponibilizadas
+                            </li>
+                            <li>
+                                Execute <code>docker-compose up -d</code> a partir da pasta raiz <em>(onde clonou o
+                                repositório)</em>
+                            </li>
+                            <li>
+                                Acesse <a href="http://localhost:3000" target="_blank">localhost:3000</a>
+                            </li>
+                        </ol>
+                    </section>
+                    <section>
+                        <h3>
+                            <span class="subtitle">Hands-on</span>
+                            Arquitetura
+                        </h3>
+                        <img src="img/architecture.png" alt="Arquitetura do Hands-on" style="max-width: 95%">
+                    </section>
+                    <section>
+                        <h3>
+                            <span class="subtitle">Hands-on</span>
+                            Aplicação
+                        </h3>
+                        <img src="img/app.png" alt="Arquitetura do Hands-on" style="max-width: 95%">
+                    </section>
+                    <section>
+                        <h3>
+                            <span class="subtitle">Hands-on</span>
+                            1. Instalar Ferramenta de Streaming
+                        </h3>
+                        <p>Comece instalando uma ferramenta que irá fazer o <em>streaming</em> de sua tela:</p>
+                        <ul>
+                            <li>
+                                <a href="https://obsproject.com/pt-br" target="_blank">
+                                    OBS Studio
+                                </a> <em>(nossa escolha)</em>
+                            </li>
+                            <li>
+                                <a href="https://www.videolan.org/vlc/"
+                                   target="_blank">
+                                    VLC
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://d2908q01vomqb2.cloudfront.net/fb644351560d8296fe6da332236b1f8d61b2828a/2020/04/15/Connecting-FFmpeg-Using-RTP-to-AWS-Media-Services-in-the-Cloud-v2.pdf"
+                                   target="_blank">
+                                    ffmpeg
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://sourceforge.net/projects/butt/" target="_blank">
+                                    butt (broadcast using this tool)
+                                </a>
+                            </li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>
+                            <span class="subtitle">Hands-on</span>
+                            2. Configurar AWS
+                        </h3>
+                        <p>
+                            Para não gastarmos tempo em nosso workshop, já configuramos todos os serviços
+                            <em>(MediaLive, MediaPackage e MediaTailor)</em>
+                        </p>
+                    </section>
+                    <section>
+                        <h3>
+                            <span class="subtitle">Hands-on</span>
+                            3. Configurar Streaming
+                        </h3>
+                        <ul class="margin">
+                            <li>
+                                Conecte a ferramenta à AWS, seguindo os tutoriais para:
+                                <ul>
+                                    <li>
+                                        <a href="https://d2908q01vomqb2.cloudfront.net/fb644351560d8296fe6da332236b1f8d61b2828a/2020/04/14/Connecting-OBS-Studio-to-AWS-Media-Services-in-the-Cloud-v2.pdf"
+                                           target="_blank">
+                                            OBS Studio
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://d2908q01vomqb2.cloudfront.net/fb644351560d8296fe6da332236b1f8d61b2828a/2020/04/15/Connecting-FFmpeg-Using-RTP-to-AWS-Media-Services-in-the-Cloud-v2.pdf"
+                                           target="_blank">
+                                            ffmpeg
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://aws.amazon.com/pt/blogs/media/connecting-vlc-media-player-using-rtp-to-aws-media-services-in-the-cloud/"
+                                           target="_blank">
+                                            VLC
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="fragment">Configure-a para capturar sua tela atual</li>
+                        </ul>
+                    </section>
+                    <section data-auto-animate>
+                        <h3>
+                            <span class="subtitle">Hands-on</span>
+                            4. Criar Aplicação
+                        </h3>
+                        <ul class="margin">
+                            <li>
+                                Utilize as aplicações de modelo que estão nesse repositório na pasta
+                                <code>app</code>
+                            </li>
+                            <li class="fragment">
+                                Ou crie uma aplicação do zero utilizando sua linguagem favorita e
+                                <a href="https://aws.amazon.com/pt/tools/" target="_blank">instale o SDK da AWS</a>
+                            </li>
+                        </ul>
+                    </section>
+                    <section data-auto-animate>
+                        <h3>
+                            <span class="subtitle">Hands-on</span>
+                            4. Criar Aplicação
+                        </h3>
+                        <ul class="margin">
+                            <li>Acesse a documentação para a linguagem escolhida:
+                                <ul>
+                                    <li>
+                                        <a href="https://docs.aws.amazon.com/aws-sdk-php/v3/api/api-medialive-2017-10-14.html"
+                                           target="_blank">
+                                            PHP
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-medialive/index.html"
+                                           target="_blank">
+                                            JavaScript
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/medialive.html"
+                                           target="_blank">
+                                            Python
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://pkg.go.dev/github.com/aws/aws-sdk-go-v2/service/medialive"
+                                           target="_blank">
+                                            Go
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://aws.amazon.com/pt/tools/" target="_blank">
+                                            Outras linguagens
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>
+                            <span class="subtitle">Hands-on</span>
+                            5. Iniciar Transmissão
+                        </h3>
+                        <ul class="margin">
+                            <li>Inicie o canal na MediaLive <em>(faremos isso para você)</em></li>
+                            <li class="fragment">Comece a transmissão a partir da ferramenta de streaming escolhida</li>
+                            <li class="fragment">Acompanhe através do link informado</li>
+                        </ul>
+                    </section>
+                    <section data-auto-animate>
+                        <h3>
+                            <span class="subtitle">Hands-on</span>
+                            6. Chavear Entradas
+                        </h3>
+                        <p>
+                            Imagine que em um sistema real você pode ter várias entradas de sinal e irá precisar
+                            chavear <em>("cortar")</em> entre elas
+                        </p>
+                        <p class="fragment">
+                            O canal que criamos possui diversas entradas já configuradas e preparadas para serem
+                            escolhidas
+                        </p>
+                    </section>
+                    <section data-auto-animate>
+                        <h3>
+                            <span class="subtitle">Hands-on</span>
+                            6. Chavear Entradas
+                        </h3>
+                        <p>
+                            Vamos então criar a funcionalidade que irá trocar a entrada do sinal
+                        </p>
+                        <ul class="margin">
+                            <li class="fragment">
+                                Descubra os nomes das entradas disponíveis através do recurso
+                                <code>DescribeChannel</code>
+                            </li>
+                            <li class="fragment">
+                                Use o recurso de <code>BatchUpdateSchedule</code> com a ação <code>InputSwitch</code> e
+                                agendamento imediato para alterar a entrada de sinal
+                            </li>
+                        </ul>
+                        <div class="smaller fragment">
+                            <a href="https://docs.aws.amazon.com/medialive/latest/apireference/channels-channelid-schedule.html#channels-channelid-scheduleput"
+                               target="_blank">
+                                Referência da API
+                            </a> &bull;
+                            <a href="https://docs.aws.amazon.com/aws-sdk-php/v3/api/api-medialive-2017-10-14.html#batchupdateschedule"
+                               target="_blank">
+                                PHP
+                            </a> &bull;
+                            <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/MediaLive.html#batchUpdateSchedule-property"
+                               target="_blank">
+                                JavaScript
+                            </a> &bull;
+                            <a href="https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/medialive.html#MediaLive.Client.batch_update_schedule"
+                               target="_blank">
+                                Python
+                            </a> &bull;
+                            <a href="https://pkg.go.dev/github.com/aws/aws-sdk-go-v2/service/medialive#Client.BatchUpdateSchedule"
+                               target="_blank">
+                                Go
+                            </a>
+                        </div>
+                    </section>
+                    <section>
+                        <h3>
+                            <span class="subtitle">Hands-on</span>
+                            7. Sinalização de Anúncios
+                        </h3>
+                        <p>
+                            O protocolo
+                            <a href="https://www.scte.org/standards/library/catalog/scte-35-digital-program-insertion-cueing-message/"
+                               target="_blank">SCTE-35</a> é um dos mais utilizados para sinalização de anúncios
+                        </p>
+                        <p class="fragment">
+                            Vamos usar novamente o recurso de <code>BatchUpdateSchedule</code> com a ação
+                            <code>Scte35SpliceInsertSettings</code> e agendamento imediato
+                        </p>
+                        <div class="smaller fragment">
+                            <a href="https://docs.aws.amazon.com/medialive/latest/apireference/channels-channelid-schedule.html#channels-channelid-scheduleput"
+                               target="_blank">
+                                Referência da API
+                            </a> &bull;
+                            <a href="https://docs.aws.amazon.com/aws-sdk-php/v3/api/api-medialive-2017-10-14.html#batchupdateschedule"
+                               target="_blank">
+                                PHP
+                            </a> &bull;
+                            <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/MediaLive.html#batchUpdateSchedule-property"
+                               target="_blank">
+                                JavaScript
+                            </a> &bull;
+                            <a href="https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/medialive.html#MediaLive.Client.batch_update_schedule"
+                               target="_blank">
+                                Python
+                            </a> &bull;
+                            <a href="https://pkg.go.dev/github.com/aws/aws-sdk-go-v2/service/medialive#Client.BatchUpdateSchedule"
+                               target="_blank">
+                                Go
+                            </a>
+                        </div>
+                    </section>
+                    <section data-visibility="hidden">
+                        <h3>
+                            <span class="subtitle">Hands-on</span>
+                            8. Overlays
+                        </h3>
+                    </section>
+                </section> <!-- Hands-on -->
+                <section>
+                    <h1>Obrigado!</h1>
+                    <p>Siga-nos em nossas redes sociais:</p>
+                    <div id="thanks">
+                        <a href="https://www.facebook.com/OTTeraTV" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                 viewBox="0 0 29.94 29.94" height="64" width="64">
+                                <g>
+                                    <path d="M27.56,0.684H2.383C1.065,0.684,0,1.748,0,3.064v23.813c0,1.312,1.065,2.379,2.383,2.379H27.56
+                                        c1.312,0,2.38-1.066,2.38-2.379V3.064C29.939,1.748,28.871,0.684,27.56,0.684z M20.125,9.167c-0.619-0.362-1.11-0.648-1.727-0.648
+                                        c-0.604,0-1.12,0.151-1.384,0.405c-0.264,0.252-0.395,0.74-0.395,1.461v1.067h3.229l-0.699,2.968h-2.53v9.862h-4.056V14.42H10.67
+                                        v-2.968h1.895v-1.133c0-1.193,0.143-1.907,0.425-2.496c0.281-0.587,0.826-1.241,1.584-1.611c0.757-0.369,1.877-0.555,3.036-0.555
+                                        c1.188,0,2.116,0.396,3.254,0.715L20.125,9.167z" class="fill"/>
+                                </g>
+                            </svg>
+                            facebook.com/OTTeraTV
+                        </a>
+                        <a href="https://www.linkedin.com/company/ottera-inc" target="_blank">
+                            <svg height="64" viewBox="0 0 74 74" width="64" xmlns="http://www.w3.org/2000/svg">
+                                <g fill="none" fill-rule="evenodd">
+                                    <path d="M8,72 L64,72 C68.418278,72 72,68.418278 72,64 L72,8 C72,3.581722 68.418278,-8.11624501e-16 64,0 L8,0 C3.581722,8.11624501e-16 -5.41083001e-16,3.581722 0,8 L0,64 C5.41083001e-16,68.418278 3.581722,72 8,72 Z"
+                                          class="fill"/>
+                                    <path d="M62,62 L51.315625,62 L51.315625,43.8021149 C51.315625,38.8127542 49.4197917,36.0245323 45.4707031,36.0245323 C41.1746094,36.0245323 38.9300781,38.9261103 38.9300781,43.8021149 L38.9300781,62 L28.6333333,62 L28.6333333,27.3333333 L38.9300781,27.3333333 L38.9300781,32.0029283 C38.9300781,32.0029283 42.0260417,26.2742151 49.3825521,26.2742151 C56.7356771,26.2742151 62,30.7644705 62,40.051212 L62,62 Z M16.349349,22.7940133 C12.8420573,22.7940133 10,19.9296567 10,16.3970067 C10,12.8643566 12.8420573,10 16.349349,10 C19.8566406,10 22.6970052,12.8643566 22.6970052,16.3970067 C22.6970052,19.9296567 19.8566406,22.7940133 16.349349,22.7940133 Z M11.0325521,62 L21.769401,62 L21.769401,27.3333333 L11.0325521,27.3333333 L11.0325521,62 Z"
+                                          fill="#fff"/>
+                                </g>
+                            </svg>
+                            linkedin.com/company/ottera-inc
+                        </a>
+                        <a href="https://twitter.com/OTTeraTV" target="_blank">
+                            <svg role="img" width="64px" height="64px" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"
+                                      class="fill"></path>
+                            </svg>
+                            twitter.com/otteratv
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <img src="img/logo.png" alt="OTTera" id="footer">
+        <script src="reveal.js/dist/reveal.js"></script>
+        <script src="reveal.js/plugin/highlight/highlight.js"></script>
+        <script>
+            Reveal.initialize({
+                center: true,
+                hash: true,
+                history: true,
+                mouseWheel: true,
+                plugins: [RevealHighlight],
+            });
+            Reveal.configure({
+                keyboard: {
+                    38: 'prev',
+                    40: 'next'
+                }
+            });
+        </script>
+    </body>
+</html>
